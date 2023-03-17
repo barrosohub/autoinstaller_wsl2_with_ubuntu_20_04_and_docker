@@ -24,6 +24,9 @@ function WaitForEscOrEnter {
 Write-Info "Verificando o status do WSL..."
 if (Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" | Where-Object -Property State -eq "Enabled") {
     Write-Info "WSL já está instalado e funcionando."
+    
+    # Aplique uma quebra de linha
+    Write-Host ""
 
     # Informando como abrir o WSL
     Write-Host "Para abrir o WSL, digite 'wsl' no PowerShell ou no prompt de comando." -ForegroundColor Green
