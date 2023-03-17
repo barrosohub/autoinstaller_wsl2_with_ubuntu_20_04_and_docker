@@ -35,11 +35,11 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Host "============================================================" -ForegroundColor Green
         Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
         Write-Host "============================================================" -ForegroundColor Green
-        #crie um temporaizador de 5 segundos antes de iniciar a próxima etapa. A mensagem enquanto o temporizador executa deve ser: "Aguarde 5 segundos... Estamos recarregando o WSL..."
         Write-Host "Aguarde 5 segundos... Estamos recarregando o WSL..." -ForegroundColor Yellow
         Start-Sleep -Seconds 5
         wsl.exe -d Ubuntu-20.04 --exec sh -c "sudo service docker start"
         Write-Host "============================================================" -ForegroundColor Green
+        wsl.exe -d Ubuntu-20.04
     }
 } else {
     Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
