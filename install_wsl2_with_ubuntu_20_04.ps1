@@ -31,7 +31,7 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Info "Notamos que você ja tem o WSL rodando normal, e que o Ubuntu 20.04 esta instalado corretamente no WSL."
         Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora installar o Docker!"
         wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
-        wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh"
+        wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
     }
 } else {
     Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
