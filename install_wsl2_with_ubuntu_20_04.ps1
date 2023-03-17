@@ -81,10 +81,11 @@ if ($wslFeature.State -eq "Enabled") {
     }
     Write-Host "============================================"
     Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
-    Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
     Write-Host "============================================"
+    Write-Host ""
+    Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
+    Write-Host ""
+    
 }
-Write-Host "============================================"
-Write-Host " Apos a reinicializacao, para executar o WSL2 e o Ubuntu 20.04, digite 'wsl' ou 'ubuntu2004' no PowerShell ou no prompt de comando." -ForegroundColor Green
-Write-Host "============================================"
+
 WaitForEscOrEnter
