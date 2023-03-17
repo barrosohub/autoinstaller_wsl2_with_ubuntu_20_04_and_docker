@@ -8,7 +8,7 @@ function Write-Info {
 
 function WaitForEscOrEnter {
     Write-Host ""
-    Write-Host "   Pressione ESC ou ENTER para fechar a janela!" -ForegroundColor Yellow
+    Write-Host "Pressione ESC ou ENTER para fechar a janela!" -ForegroundColor Yellow
     Write-Host ""
     do {
         $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
@@ -32,8 +32,14 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora installar o Docker!"
         wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
         wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
-        Write-Host "Docker instalado com sucesso! Pode fechar já este terminal!"
-        Write-Host ""
+        Write-Host "============================================================" -ForegroundColor Green
+        Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
+        Write-Host "============================================================" -ForegroundColor Green
+        #crie um temporaizador de 5 segundos antes de iniciar a próxima etapa. A mensagem enquanto o temporizador executa deve ser: "Aguarde 5 segundos... Estamos recarregando o WSL..."
+        Write-Host "Aguarde 5 segundos... Estamos recarregando o WSL..." -ForegroundColor Yellow
+        Start-Sleep -Seconds 5
+        wsl.exe -d Ubuntu-20.04 --exec sh -c "sudo service docker start"
+        Write-Host "============================================================" -ForegroundColor Green
     }
 } else {
     Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
