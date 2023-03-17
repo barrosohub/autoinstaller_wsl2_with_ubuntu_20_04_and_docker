@@ -27,8 +27,9 @@ try {
         }
     }
 } catch { }
-
-Write-Info "Verificando o status do WSL... Aguarde, pode demorar alguns minutos."
+Write-Info ""
+Write-Info "   Verificando o status do WSL... Aguarde, pode demorar alguns minutos."
+Write-Info ""
 $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
 if ($wslFeature.State -eq "Enabled") {
     Write-Info "WSL2 está instalado."
@@ -37,7 +38,7 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Info "Notamos que você já tem o WSL rodando normal, e que o Ubuntu 20.04 está instalado corretamente no WSL."
     } else {
         Write-Host "============================================"
-        Write-Info "Iniciando a instalacao do Ubuntu 20.04 no WSL2..."
+        Write-Info " Iniciando a instalacao do Ubuntu 20.04 no WSL2..."
         Write-Host "============================================"
         try {
             wsl.exe --install -d Ubuntu-20.04
@@ -51,7 +52,7 @@ if ($wslFeature.State -eq "Enabled") {
             Add-AppxPackage -Path $DownloadPath
         }
         Write-Host "============================================"
-        Write-Host "Ubuntu 20.04 instalado com sucesso!" -ForegroundColor Green
+        Write-Host "   Ubuntu 20.04 instalado com sucesso!" -ForegroundColor Green
         Write-Host "============================================"
     }
 } else {
@@ -79,11 +80,11 @@ if ($wslFeature.State -eq "Enabled") {
         Add-AppxPackage -Path $DownloadPath
     }
     Write-Host "============================================"
-    Write-Host "WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
-    Write-Host "Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
+    Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
+    Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
     Write-Host "============================================"
 }
 Write-Host "============================================"
-Write-Host "Apos a reinicializacao, para executar o WSL2 e o Ubuntu 20.04, digite 'wsl' ou 'ubuntu2004' no PowerShell ou no prompt de comando." -ForegroundColor Green
+Write-Host " Apos a reinicializacao, para executar o WSL2 e o Ubuntu 20.04, digite 'wsl' ou 'ubuntu2004' no PowerShell ou no prompt de comando." -ForegroundColor Green
 Write-Host "============================================"
 WaitForEscOrEnter
