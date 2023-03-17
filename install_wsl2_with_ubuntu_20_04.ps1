@@ -32,13 +32,13 @@ Write-Info "   Verificando o status do WSL... Aguarde, pode demorar alguns minut
 Write-Info ""
 $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
 if ($wslFeature.State -eq "Enabled") {
-    Write-Info "WSL2 está instalado."
+    Write-Info "WSL2 esta instalado."
 
     if ($ubuntuInstalled) {
-        Write-Info "Notamos que você já tem o WSL rodando normal, e que o Ubuntu 20.04 está instalado corretamente no WSL."
+        Write-Info "Notamos que voce já tem o WSL rodando normal, e que o Ubuntu 20.04 está instalado corretamente no WSL."
     } else {
         Write-Host "============================================"
-        Write-Info " Iniciando a instalacao do Ubuntu 20.04 no WSL2..."
+        Write-Info " Iniciando a verificacao do Ubuntu 20.04 no WSL2..."
         Write-Host "============================================"
         try {
             wsl.exe --install -d Ubuntu-20.04
