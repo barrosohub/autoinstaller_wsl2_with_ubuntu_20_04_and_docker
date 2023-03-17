@@ -19,9 +19,10 @@ function WaitForEscOrEnter {
 # Verificando se o Ubuntu 20.04 esta instalado
 $ubuntuInstalled = $true
 
-Write-Info ""
-Write-Info "   Verificando o status do WSL... Aguarde, pode demorar alguns minutos."
-Write-Info ""
+Write-Info "===================================================================="
+Write-Info "Verificando o status do WSL... Aguarde, pode demorar alguns minutos!" -ForegroundColor Yellow
+Write-Info "===================================================================="
+Write-Host ""
 $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
 
 if ($wslFeature.State -eq "Enabled") {
@@ -35,10 +36,8 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Host "============================================================" -ForegroundColor Green
         Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
         Write-Host "============================================================" -ForegroundColor Green
-        Write-Host "Aguarde 5 segundos... Estamos recarregando o WSL..." -ForegroundColor Yellow
+        Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
         Start-Sleep -Seconds 5
-        wsl.exe -d Ubuntu-20.04 --exec sh -c "sudo service docker start"
-        Write-Host "============================================================" -ForegroundColor Green
         wsl.exe -d Ubuntu-20.04
     }
 } else {
