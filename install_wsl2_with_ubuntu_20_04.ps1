@@ -8,7 +8,7 @@ function Write-Info {
 
 function WaitForEscOrEnter {
     Write-Host ""
-    Write-Host "   Pressione ESC ou ENTER para fechar a janela." -ForegroundColor Yellow
+    Write-Host "   Pressione ESC ou ENTER para fechar a janela!" -ForegroundColor Yellow
     Write-Host ""
     do {
         $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
