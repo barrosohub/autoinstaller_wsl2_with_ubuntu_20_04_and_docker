@@ -2,24 +2,21 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 
 function Write-Info {
     param ([string]$Message)
+    Write-Host ""
     Write-Host $Message -ForegroundColor Cyan
 }
 
-# Check if WSL 2 is installed
-$wsl2Feature = Get-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform"
-if ($wsl2Feature.State -ne "Enabled") {
-    try {
-        Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
-        Write-Info "Please restart your computer to finish installing WSL 2"
-    } catch {
-        Write-Host "WSL 2 could not be installed. Please make sure your computer supports virtualization and is running a compatible version of Windows." -ForegroundColor Red
-        exit 1
-    }
+function WaitForEscOrEnter {
+    Write-Host ""
+    Write-Host "   Pressione ESC ou ENTER para fechar a janela." -ForegroundColor Yellow
+    Write-Host ""
+    do {
+        $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    } until ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13)
+    exit
 }
-Write-Info "WSL2 is installed."
 
-# Install Ubuntu 20.04 if it's not installed
+# Verificando se o Ubuntu 20.04 está instalado
 $ubuntuInstalled = $false
 try {
     $distros = (wsl.exe -l -q)
@@ -29,29 +26,64 @@ try {
             break
         }
     }
-} catch [System.Management.Automation.CommandNotFoundException] {
-    Write-Host "WSL is not supported on the current system." -ForegroundColor Red
-    exit 1
-} catch {
-    Write-Host "An error occurred while checking if Ubuntu 20.04 is installed in WSL 2." -ForegroundColor Red
-    exit 1
-}
-if ($ubuntuInstalled) {
-    Write-Info "Ubuntu 20.04 is already installed in WSL 2."
-} else {
-    try {
-        Add-AppxPackage -Register -Path (Get-AppPackage -Name Microsoft.Ubuntu.20.04 | Select -ExpandProperty InstallLocation)\\appxmanifest.xml -DisableDevelopmentMode | Out-Null
+} catch { }
+
+Write-Info "Verificando o status do WSL... Aguarde, pode demorar alguns minutos."
+$wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
+if ($wslFeature.State -eq "Enabled") {
+    Write-Info "WSL2 está instalado."
+
+    if ($ubuntuInstalled) {
+        Write-Info "Notamos que você já tem o WSL rodando normal, e que o Ubuntu 20.04 está instalado corretamente no WSL."
+    } else {
         Write-Host "============================================"
-        Write-Host "Ubuntu 20.04 installs have started!" -ForegroundColor Green
+        Write-Info "Iniciando a instalacao do Ubuntu 20.04 no WSL2..."
         Write-Host "============================================"
-    } catch {
-        Write-Host "Ubuntu 20.04 installation failed. Please install Ubuntu 20.04 from the Microsoft Store manually." -ForegroundColor Red
-        exit 1
+        try {
+            wsl.exe --install -d Ubuntu-20.04
+            Start-Sleep -Seconds 30
+            wsl.exe --set-version Ubuntu-20.04 2
+        } catch {
+            Write-Host "Nao foi possivel instalar o Ubuntu 20.04 usando 'wsl --install -d Ubuntu-20.04'. Tentando outra abordagem..." -ForegroundColor Yellow
+            $UbuntuUrl = "https://aka.ms/wslubuntu2004"
+            $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
+            Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
+            Add-AppxPackage -Path $DownloadPath
+        }
+        Write-Host "============================================"
+        Write-Host "Ubuntu 20.04 instalado com sucesso!" -ForegroundColor Green
+        Write-Host "============================================"
     }
+} else {
+    Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
+
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
+    Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
+
+    $KernelUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
+    $DownloadPath = "$env:TEMP\wsl_update_x64.msi"
+    Invoke-WebRequest -Uri $KernelUrl -OutFile $DownloadPath
+    Start-Process -FilePath msiexec -ArgumentList "/i", $DownloadPath, "/quiet", "/qn", "/norestart" -Wait
+
+    wsl --set-default-version 2
+
+    try {
+        wsl.exe --install -d Ubuntu-20.04
+        Start-Sleep -Seconds 30
+        wsl.exe --set-version Ubuntu-20.04 2
+    } catch {
+        Write-Host "Nao foi possivel instalar o Ubuntu 20.04 usando 'wsl --install -d Ubuntu-20.04'. Tentando outra abordagem..." -ForegroundColor Yellow
+        $UbuntuUrl = "https://aka.ms/wslubuntu2004"
+        $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
+        Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
+        Add-AppxPackage -Path $DownloadPath
+    }
+    Write-Host "============================================"
+    Write-Host "WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
+    Write-Host "Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
+    Write-Host "============================================"
 }
-
 Write-Host "============================================"
-Write-Host "After restarting your computer, you can run Ubuntu 20.04 in WSL 2 by typing 'wsl' or 'ubuntu2004' in PowerShell or command prompt." -ForegroundColor Green
+Write-Host "Apos a reinicializacao, para executar o WSL2 e o Ubuntu 20.04, digite 'wsl' ou 'ubuntu2004' no PowerShell ou no prompt de comando." -ForegroundColor Green
 Write-Host "============================================"
-Read-Host "Press Enter to exit"
-
+WaitForEscOrEnter
