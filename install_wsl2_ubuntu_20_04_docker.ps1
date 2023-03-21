@@ -58,15 +58,15 @@ if ($wslFeature.State -eq "Enabled") {
         # Verificando se o Docker esta instalado no WSL
         $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
         if ($dockerCheck -ne "") {
-            Write-Host "Notamos que o Docker está instalado corretamente no WSL. " -NoNewLine
+            Write-Host "Notamos que o Docker CE (Community Edition) está instalado corretamente no WSL. " -NoNewLine
             Write-Host "[OK]" -ForegroundColor Green
             redirectIfDockerIsInstalled
         } else {
-            Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora instalar o Docker!"
+            Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora instalar o Docker CE!"
             wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
             wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
             Write-Host "============================================================" -ForegroundColor Green
-            Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
+            Write-Host " Docker CE (Community Edition) instalado com sucesso!" -ForegroundColor Green
             Write-Host "============================================================" -ForegroundColor Green
             redirectIfDockerIsInstalled
         }

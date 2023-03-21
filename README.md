@@ -1,34 +1,31 @@
-# PowerShell Script para instalar e configurar WSL2, Ubuntu 20.04 e Docker
+# 🐧 WSL2 e Docker no Ubuntu 20.04 🐳
 
-Este script automatiza o processo de instalação e configuração do WSL2 (Windows Subsystem for Linux) com o Ubuntu 20.04 e o Docker no Windows.
+Este script de PowerShell instala e configura o WSL2 e o Docker no Ubuntu 20.04 no Windows. Ele verifica se o WSL2 e o Ubuntu 20.04 estão instalados e, se necessário, instala e configura o Docker.
 
-## Resumo do script
+## 📋 Requisitos
 
-1. Verifica se o WSL2 está habilitado e se o Ubuntu 20.04 já está instalado.
-2. Caso o WSL2 e o Ubuntu 20.04 já estejam instalados, o script instala o Docker no ambiente WSL.
-3. Se o WSL2 não estiver habilitado, o script habilita o WSL2 e instala o Ubuntu 20.04.
-4. Após a instalação do WSL2 e do Ubuntu 20.04, o script instala o Docker no ambiente WSL.
+- Windows 10, 11 ou Windows Server com suporte ao WSL2.
+- Acesso à internet para baixar pacotes e atualizações.
 
-## Uso
+## 🚀 Como usar
 
-1. Abra o PowerShell como administrador e execute o script.
-2. Siga as instruções na tela.
-3. Reinicie o computador, se necessário, para concluir a instalação.
+1. Baixe o arquivo install_wsl2_ubuntu_20_04_docker.ps1, e execute como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator".
+2. O script verificará se o WSL2 e o Ubuntu 20.04 estão instalados. Se não estiverem, ele iniciará o processo de instalação.
+3. Caso o WSL2 e o Ubuntu 20.04 estejam instalados corretamente, o script verificará se o Docker está instalado no WSL. Se não estiver, ele instalará o Docker.
+4. Ao final do processo, o terminal será redirecionado para o WSL com o Ubuntu 20.04 e o Docker instalados.
+5. Pressione ESC ou ENTER para fechar a janela do PowerShell quando solicitado.
 
-## Funções principais
+## 🔍 O que o script faz
 
-- `Write-Host`: Exibe informações no console.
-- `Write-Info`: Exibe informações no console com cor ciano.
-- `WaitForEscOrEnter`: Aguarda o usuário pressionar a tecla ESC ou ENTER para fechar a janela.
+- Verifica se o PowerShell está sendo executado como administrador.
+- Verifica se o WSL2 e o Ubuntu 20.04 estão instalados.
+- Instala e configura o WSL2 e o Ubuntu 20.04, se necessário.
+- Verifica se o Docker está instalado no Ubuntu 20.04 no WSL.
+- Instala o Docker no Ubuntu 20.04, se necessário.
+- Redireciona o usuário para o terminal do WSL com o Ubuntu 20.04 e o Docker instalados.
 
-## Destaques do script
+## 💬 Suporte
 
-- `$OutputEncoding = [System.Text.Encoding]::UTF8`: Define a codificação de saída como UTF8.
-- `Get-WindowsOptionalFeature`: Verifica se o WSL2 está habilitado no sistema.
-- `Enable-WindowsOptionalFeature`: Habilita o WSL2 e o recurso de plataforma de máquina virtual no sistema.
-- `Invoke-WebRequest`: Faz o download do kernel do WSL2 e do Ubuntu 20.04.
-- `Start-Process`: Inicia a instalação do kernel do WSL2.
-- `wsl --set-default-version 2`: Define a versão padrão do WSL como 2.
-- `wsl.exe --install -d Ubuntu-20.04`: Instala o Ubuntu 20.04 no WSL2.
-- `Add-AppxPackage`: Instala o Ubuntu 20.04 como uma alternativa, caso a instalação inicial falhe.
-- `WaitForEscOrEnter`: Aguarda o usuário pressionar a tecla ESC ou ENTER para fechar a janela.
+Caso encontre algum problema ou tenha dúvidas, sinta-se à vontade para abrir um issue ou enviar uma mensagem.
+
+🎉 Boa sorte e divirta-se com o WSL2 e o Docker no Ubuntu 20.04! 🥳
