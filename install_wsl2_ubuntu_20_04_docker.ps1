@@ -78,7 +78,7 @@ if ($wslFeature.State -eq "Enabled") {
 
         wsl.exe --set-version Ubuntu-20.04 2
     } catch {
-        Write-Host "Nao foi possivel instalar o Ubuntu 20.04 usando 'wsl --install -d Ubuntu-20.04'. Tentando outra abordagem..." -ForegroundColor Yellow
+        Write-Host "Não foi possivel instalar o Ubuntu 20.04 usando 'wsl --install -d Ubuntu-20.04'. Tentando outra abordagem..." -ForegroundColor Yellow
         $UbuntuUrl = "https://aka.ms/wslubuntu2004"
         $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
         Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
@@ -89,7 +89,7 @@ if ($wslFeature.State -eq "Enabled") {
     Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
     Write-Host "============================================"
     Write-Host ""
-    Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04!" -ForegroundColor Yellow
+    Write-Host " Reinicie o computador para concluir a instalação e usar o WSL2 e o Ubuntu 20.04!" -ForegroundColor Yellow
     Write-Host ""
 }
 
