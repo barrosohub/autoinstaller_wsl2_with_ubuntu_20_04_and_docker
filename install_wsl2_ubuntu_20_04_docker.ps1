@@ -25,6 +25,14 @@ Write-Info "====================================================================
 Write-Host ""
 $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
 
+function redirectIfDockerIsInstalled {
+    Write-Host ""
+    Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
+    Write-Host ""
+    Start-Sleep -Seconds 5
+    wsl.exe -d Ubuntu-20.04
+}
+
 if ($wslFeature.State -eq "Enabled") {
     Write-Info "WSL2 esta instalado."
 
@@ -34,7 +42,8 @@ if ($wslFeature.State -eq "Enabled") {
         # Verificando se o Docker esta instalado no WSL
         $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
         if ($dockerCheck -ne "") {
-            Write-Info "Docker já estava instalado no WSL."
+            Write-Info "Notamos também que o Docker já estava instalado no seu WSL."
+            redirectIfDockerIsInstalled
         } else {
             Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora instalar o Docker!"
             wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
@@ -42,9 +51,7 @@ if ($wslFeature.State -eq "Enabled") {
             Write-Host "============================================================" -ForegroundColor Green
             Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
             Write-Host "============================================================" -ForegroundColor Green
-            Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
-            Start-Sleep -Seconds 5
-            wsl.exe -d Ubuntu-20.04
+            redirectIfDockerIsInstalled
         }
     }
 } else {
