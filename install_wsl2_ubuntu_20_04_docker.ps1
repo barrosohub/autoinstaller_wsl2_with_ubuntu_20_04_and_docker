@@ -1,5 +1,15 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
+function WaitForEscOrEnter {
+    Write-Host ""
+    Write-Host "Pressione ESC ou ENTER para fechar esta janela!" -ForegroundColor Yellow
+    Write-Host ""
+    do {
+        $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    } until ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13)
+    exit
+}
+
 # Verifica se o PowerShell está sendo executado como administrador
 function IsAdmin {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -10,24 +20,14 @@ function IsAdmin {
 # Verifica se o usuário está executando o script como administrador
 if (-not (IsAdmin)) {
     Write-Host "Este script precisa ser executado como administrador." -ForegroundColor Red
-    Write-Host "Por favor, clique com o botão direito do mouse no PowerShell e selecione 'Executar como administrador'." -ForegroundColor Yellow
-    exit
+    Write-Host "Por favor, clique com o botão direito do mouse deste arquivo, procure e selecione a opção 'Executar como administrador' ou 'Run as Administrator'." -ForegroundColor Yellow
+    WaitForEscOrEnter
 }
 
 function Write-Info {
     param ([string]$Message)
     Write-Host ""
     Write-Host $Message -ForegroundColor Cyan
-}
-
-function WaitForEscOrEnter {
-    Write-Host ""
-    Write-Host "Pressione ESC ou ENTER para fechar a janela!" -ForegroundColor Yellow
-    Write-Host ""
-    do {
-        $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    } until ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13)
-    exit
 }
 
 # Verificando se o Ubuntu 20.04 esta instalado
