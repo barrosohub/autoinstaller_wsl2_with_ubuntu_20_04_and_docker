@@ -17,6 +17,7 @@ Este script automatiza o processo de instalação e configuração do WSL2 (Wind
 
 ## Funções principais
 
+- `Write-Host`: Exibe informações no console.
 - `Write-Info`: Exibe informações no console com cor ciano.
 - `WaitForEscOrEnter`: Aguarda o usuário pressionar a tecla ESC ou ENTER para fechar a janela.
 
