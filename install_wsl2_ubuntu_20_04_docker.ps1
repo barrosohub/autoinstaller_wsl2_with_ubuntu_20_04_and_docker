@@ -30,15 +30,22 @@ if ($wslFeature.State -eq "Enabled") {
 
     if ($ubuntuInstalled) {
         Write-Info "Notamos que você ja tem o WSL rodando normal, e que o Ubuntu 20.04 esta instalado corretamente no WSL."
-        Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora installar o Docker!"
-        wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
-        wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
-        Write-Host "============================================================" -ForegroundColor Green
-        Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
-        Write-Host "============================================================" -ForegroundColor Green
-        Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
-        Start-Sleep -Seconds 5
-        wsl.exe -d Ubuntu-20.04
+
+        # Verificando se o Docker esta instalado no WSL
+        $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
+        if ($dockerCheck -ne "") {
+            Write-Info "Docker já estava instalado no WSL."
+        } else {
+            Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora instalar o Docker!"
+            wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
+            wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
+            Write-Host "============================================================" -ForegroundColor Green
+            Write-Host " Docker instalado com sucesso!" -ForegroundColor Green
+            Write-Host "============================================================" -ForegroundColor Green
+            Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
+            Start-Sleep -Seconds 5
+            wsl.exe -d Ubuntu-20.04
+        }
     }
 } else {
     Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
@@ -56,20 +63,21 @@ if ($wslFeature.State -eq "Enabled") {
     try {
         wsl.exe --install -d Ubuntu-20.04
         Start-Sleep -Seconds 30
-        wsl.exe --set-version Ubuntu-20.04 2
-    } catch {
-        Write-Host "Nao foi possivel instalar o Ubuntu 20.04 usando 'wsl --install -d Ubuntu-20.04'. Tentando outra abordagem..." -ForegroundColor Yellow
-        $UbuntuUrl = "https://aka.ms/wslubuntu2004"
-        $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
-        Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
-        Add-AppxPackage -Path $DownloadPath
-    }
-    Write-Host "============================================"
-    Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
-    Write-Host "============================================"
-    Write-Host ""
-    Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
-    Write-Host ""
+       
+    wsl.exe --set-version Ubuntu-20.04 2
+} catch {
+    Write-Host "Nao foi possivel instalar o Ubuntu 20.04 usando 'wsl --install -d Ubuntu-20.04'. Tentando outra abordagem..." -ForegroundColor Yellow
+    $UbuntuUrl = "https://aka.ms/wslubuntu2004"
+    $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
+    Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
+    Add-AppxPackage -Path $DownloadPath
+}
+Write-Host "============================================"
+Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
+Write-Host "============================================"
+Write-Host ""
+Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04." -ForegroundColor Yellow
+Write-Host ""
 }
 
 WaitForEscOrEnter
