@@ -1,5 +1,19 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
+# Verifica se o PowerShell está sendo executado como administrador
+function IsAdmin {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+    $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+# Verifica se o usuário está executando o script como administrador
+if (-not (IsAdmin)) {
+    Write-Host "Este script precisa ser executado como administrador." -ForegroundColor Red
+    Write-Host "Por favor, clique com o botão direito do mouse no PowerShell e selecione 'Executar como administrador'." -ForegroundColor Yellow
+    exit
+}
+
 function Write-Info {
     param ([string]$Message)
     Write-Host ""
