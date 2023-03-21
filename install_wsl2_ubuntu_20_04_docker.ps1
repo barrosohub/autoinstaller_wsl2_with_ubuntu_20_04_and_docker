@@ -34,7 +34,7 @@ function Write-Info {
 $ubuntuInstalled = $true
 
 Write-Info "===================================================================="
-Write-Info "Verificando o status do WSL... Aguarde, pode demorar alguns minutos!" -ForegroundColor Yellow
+Write-Info "Verificando o status do WSL... Aguarde, pode demorar alguns minutos!"
 Write-Info "===================================================================="
 Write-Host ""
 $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
