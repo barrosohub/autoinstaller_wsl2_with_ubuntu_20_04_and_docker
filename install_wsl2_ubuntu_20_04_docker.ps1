@@ -49,9 +49,8 @@ function RedirectToWSLTerminal {
 
 if ($wslFeature.State -eq "Enabled") {
     Write-Info "WSL2 está instalado. [OK]"
-    $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
-
-    if ($dockerCheck -ne "") {
+    $dockerCheck =  wsl.exe -d Ubuntu-20.04 --exec sh -c "systemctl is-active docker"
+    if ($dockerCheck -eq "active") {
         Write-Info "Docker CE (Community Edition) está instalado corretamente no WSL no Ubuntu 20.04. [OK]"
         RedirectToWSLTerminal
     } else {
@@ -85,12 +84,12 @@ if ($wslFeature.State -eq "Enabled") {
         Add-AppxPackage -Path $DownloadPath
     }
     Write-Host ""
-    Write-Host "============================================"
-    Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
-    Write-Host "============================================"
-    Write-Host ""
-    Write-Host " Reinicie o computador para concluir a instalação e usar o WSL2 e o Ubuntu 20.04!" -ForegroundColor Yellow
-    Write-Host ""
+Write-Host "============================================"
+Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
+Write-Host "============================================"
+Write-Host ""
+Write-Host " Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker" -ForegroundColor Yellow
+Write-Host ""
 }
 
 WaitForEscOrEnter
