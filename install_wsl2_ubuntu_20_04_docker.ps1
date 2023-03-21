@@ -101,7 +101,7 @@ Write-Host "============================================"
 Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
 Write-Host "============================================"
 Write-Host ""
-Write-Host " Reinicie o computador para concluir a instalacao e usar o WSL2 e o Ubuntu 20.04!" -ForegroundColor Yellow
+Write-Host " Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker" -ForegroundColor Yellow
 Write-Host ""
 }
 
