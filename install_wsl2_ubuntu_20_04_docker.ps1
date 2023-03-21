@@ -34,15 +34,18 @@ function redirectIfDockerIsInstalled {
 }
 
 if ($wslFeature.State -eq "Enabled") {
-    Write-Info "WSL2 esta instalado."
+    Write-Host "WSL2 esta instalado." -NoNewLine
+    Write-Host "[OK]" -ForegroundColor Green
 
-    if ($ubuntuInstalled) {
-        Write-Info "Notamos que você ja tem o WSL rodando normal, e que o Ubuntu 20.04 esta instalado corretamente no WSL."
+    if ($ubuntuInstalled) {        
+        Write-Host "Notamos que o Ubuntu 20.04 esta instalado corretamente no WSL." -NoNewLine
+        Write-Host "[OK]" -ForegroundColor Green
 
         # Verificando se o Docker esta instalado no WSL
         $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
         if ($dockerCheck -ne "") {
-            Write-Info "Notamos também que o Docker já estava instalado no seu WSL."
+            Write-Host "Notamos também que o Docker já estava instalado no seu WSL." -NoNewLine
+            Write-Host "[OK]" -ForegroundColor Green
             redirectIfDockerIsInstalled
         } else {
             Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora instalar o Docker!"
