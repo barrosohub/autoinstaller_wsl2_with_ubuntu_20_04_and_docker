@@ -53,7 +53,7 @@ if ($wslFeature.State -eq "Enabled") {
     if ($dockerCheck -eq "active") {
         Write-Info "Docker CE (Community Edition) está instalado corretamente no WSL no Ubuntu 20.04. [OK]"
         RedirectToWSLTerminal
-    } else {
+    } else if ($dockerCheck -eq "inactive") {
         InstallDocker
         RedirectToWSLTerminal
     }
