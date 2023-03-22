@@ -33,6 +33,31 @@ function InstallDocker {
     RedirectIfDockerIsInstalled
 }
 
+function InstallWsl2 {
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
+    Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
+
+    $KernelUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
+    $DownloadPath = "$env:TEMP\wsl_update_x64.msi"
+    Invoke-WebRequest -Uri $KernelUrl -OutFile $DownloadPath
+    Start-Process -FilePath msiexec -ArgumentList "/i", $DownloadPath, "/quiet", "/qn", "/norestart" -Wait
+
+    wsl --set-default-version 2 > Out-Null
+}
+
+function InstallUbuntu20_04 {
+   try {
+        Write-Host "Baixando e instalando o Ubuntu 20.04 via wsl..." -ForegroundColor Yellow
+        wsl --install -d Ubuntu-20.04
+    } catch {
+        Write-Host "Baixando e instalando o Ubuntu 20.04..." -ForegroundColor Yellow
+        $UbuntuUrl = "https://aka.ms/wslubuntu2004"
+        $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
+        Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
+        Add-AppxPackage -Path $DownloadPath
+    }
+}
+
 function RedirectIfDockerIsInstalled {
     Write-Host ""
     Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
@@ -76,26 +101,26 @@ if ($wslFeature.State -eq "Enabled") {
         }
     } elseif ($ubuntuInstalled) {
         Write-Host "Ubuntu 20.04 está instalado, mas não foi inicializado. Por favor, inicialize o Ubuntu 20.04 e configure o usuário e senha. Após isso, execute este script novamente." -ForegroundColor Yellow
+        Write-Host "Tentando inicializar o Ubuntu 20.04..." -ForegroundColor Yellow
+        wsl.exe -d Ubuntu-20.04
+        Write-Host "Agora, execute este script novamente." -ForegroundColor Yellow
+        WaitForEscOrEnter
     } else {
-        Write-Host "Ubuntu 20.04 não está instalado. Por favor, instale o Ubuntu 20.04 e inicialize-o. Após isso, execute este script novamente." -ForegroundColor Yellow
+        Write-Host "Ubuntu 20.04 não está instalado. Vamos instalar agora!" -ForegroundColor Yellow
+        InstallUbuntu20_04
+        Write-Host ""
+        Write-Host "============================================"
+        Write-Host " Ubuntu 20.04 instalado com sucesso!" -ForegroundColor Green
+        Write-Host "============================================"
+        Write-Host ""
+        Write-Host " Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker" -ForegroundColor Yellow
+        Write-Host ""
     }
 } else {
     Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
 
-    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
-    Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
-
-    $KernelUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
-    $DownloadPath = "$env:TEMP\wsl_update_x64.msi"
-    Invoke-WebRequest -Uri $KernelUrl -OutFile $DownloadPath
-    Start-Process -FilePath msiexec -ArgumentList "/i", $DownloadPath, "/quiet", "/qn", "/norestart" -Wait
-
-    wsl --set-default-version 2 > Out-Null
-
-    $UbuntuUrl = "https://aka.ms/wslubuntu2004"
-    $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
-    Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
-    Add-AppxPackage -Path $DownloadPath
+    InstallWsl2
+    InstallUbuntu20_04    
 
     Write-Host ""
     Write-Host "============================================"
