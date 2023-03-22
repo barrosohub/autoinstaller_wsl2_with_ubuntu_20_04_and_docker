@@ -58,16 +58,16 @@ if ($wslFeature.State -eq "Enabled") {
     Write-Host "WSL2 está instalado. " -NoNewLine
     Write-Host "[OK]" -ForegroundColor Green
 
-    $ubuntuInstalled = wsl.exe -l -q | Select-String -Pattern "Ubuntu-20.04"
-    $ubuntuInitialized = wsl.exe -d Ubuntu-20.04 --exec sh -c "test -f ~/.ubuntu_initialized && echo true || echo false"
+    $ubuntuInstalled = (wsl.exe -l --quiet 2>&1 | Out-String).Replace("`r`n", "`n").Split("`n") -contains "Ubuntu-20.04"
+    $ubuntuInitialized = (wsl.exe -d Ubuntu-20.04 --exec sh -c "echo 'test'" 2>&1 | Out-String).Replace("`r`n", "`n").Split("`n") -contains "test"
 
     if ($ubuntuInstalled -and $ubuntuInitialized -eq "true") {
         Write-Host "Notamos que o Ubuntu 20.04 está instalado corretamente no WSL. " -NoNewLine
         Write-Host "[OK]" -ForegroundColor Green
 
         # Verificando se o Docker está instalado no WSL
-        $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "systemctl is-active docker"
-        if ($dockerCheck -eq "active") {
+        $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
+        if (![string]::IsNullOrWhiteSpace($dockerCheck)) {
             Write-Host "Notamos que o Docker CE (Community Edition) está instalado corretamente no WSL. " -NoNewLine
             Write-Host "[OK]" -ForegroundColor Green
             RedirectIfDockerIsInstalled
