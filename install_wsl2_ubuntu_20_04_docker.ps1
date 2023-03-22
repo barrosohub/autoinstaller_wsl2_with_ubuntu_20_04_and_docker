@@ -23,15 +23,6 @@ function Write-Info {
     Write-Host $Message -ForegroundColor Cyan
 }
 
-function InstallDocker {    
-    wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
-    wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
-    Write-Host "============================================================" -ForegroundColor Green
-    Write-Host " Docker CE (Community Edition) instalado com sucesso!" -ForegroundColor Green
-    Write-Host "============================================================" -ForegroundColor Green
-    RedirectIfDockerIsInstalled
-}
-
 function InstallWsl2 {
     Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
     Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
@@ -45,17 +36,26 @@ function InstallWsl2 {
 }
 
 function InstallUbuntu20_04 {
-   try {
-        Write-Host "Baixando e instalando o Ubuntu 20.04 via wsl..." -ForegroundColor Yellow
-        wsl --install -d Ubuntu-20.04
-    } catch {
-        Write-Host "Não foi possível instalar o Ubuntu 20.04 via wsl ainda. Vamos tentar instalar via Appx..." -ForegroundColor Yellow
-        Write-Host "Baixando e instalando o Ubuntu 20.04..." -ForegroundColor Yellow
-        $UbuntuUrl = "https://aka.ms/wslubuntu2004"
-        $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
-        Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
-        Add-AppxPackage -Path $DownloadPath
-    }
+    try {
+         Write-Host "Baixando e instalando o Ubuntu 20.04 via wsl..." -ForegroundColor Yellow
+         wsl --install -d Ubuntu-20.04
+     } catch {
+         Write-Host "Não foi possível instalar o Ubuntu 20.04 via wsl ainda. Vamos tentar instalar via Appx..." -ForegroundColor Yellow
+         Write-Host "Baixando e instalando o Ubuntu 20.04..." -ForegroundColor Yellow
+         $UbuntuUrl = "https://aka.ms/wslubuntu2004"
+         $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
+         Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
+         Add-AppxPackage -Path $DownloadPath
+     }
+ }
+
+function InstallDocker {    
+    wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
+    wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
+    Write-Host "============================================================" -ForegroundColor Green
+    Write-Host " Docker CE (Community Edition) instalado com sucesso!" -ForegroundColor Green
+    Write-Host "============================================================" -ForegroundColor Green
+    RedirectIfDockerIsInstalled
 }
 
 function RedirectIfDockerIsInstalled {
