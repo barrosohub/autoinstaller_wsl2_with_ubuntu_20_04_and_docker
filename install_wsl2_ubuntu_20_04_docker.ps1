@@ -50,6 +50,7 @@ function InstallUbuntu20_04 {
         Write-Host "Baixando e instalando o Ubuntu 20.04 via wsl..." -ForegroundColor Yellow
         wsl --install -d Ubuntu-20.04
     } catch {
+        Write-Host "Falha ao instalar o Ubuntu 20.04 via wsl. Vamos tentar instalar via Appx..." -ForegroundColor Yellow
         Write-Host "Baixando e instalando o Ubuntu 20.04..." -ForegroundColor Yellow
         $UbuntuUrl = "https://aka.ms/wslubuntu2004"
         $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
