@@ -23,8 +23,7 @@ function Write-Info {
     Write-Host $Message -ForegroundColor Cyan
 }
 
-function InstallDocker {
-    Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estão instalados corretamente, vamos agora instalar o Docker CE!"
+function InstallDocker {    
     wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
     wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
     Write-Host "============================================================" -ForegroundColor Green
@@ -98,6 +97,7 @@ if ($wslFeature.State -eq "Enabled") {
             Write-Host "[OK]" -ForegroundColor Green
             RedirectIfDockerIsInstalled
         } else {
+            Write-Host "Ok! Já que o WSL e o Ubuntu 20.04 estão instalados corretamente, vamos agora instalar o Docker CE!" -ForegroundColor Yellow
             InstallDocker
         }
     } elseif ($ubuntuInstalled) {
