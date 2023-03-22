@@ -102,9 +102,8 @@ if ($wslFeature.State -eq "Enabled") {
         }
     } elseif ($ubuntuInstalled) {
         Write-Host "Ubuntu 20.04 está instalado, mas não foi inicializado. Por favor, inicialize o Ubuntu 20.04 e configure o usuário e senha. Após isso, execute este script novamente." -ForegroundColor Yellow
-        Write-Host "Tentando inicializar o Ubuntu 20.04..." -ForegroundColor Yellow
+        Write-Host "Tentando inicializar o Ubuntu 20.04... (se der algum erro, tente reiniciar sua máquina e tente rodar de novo)" -ForegroundColor Yellow
         wsl.exe -d Ubuntu-20.04
-        Write-Host "Agora, execute este script novamente." -ForegroundColor Yellow
         WaitForEscOrEnter
     } else {
         Write-Host "Ubuntu 20.04 não está instalado. Vamos instalar agora!" -ForegroundColor Yellow
