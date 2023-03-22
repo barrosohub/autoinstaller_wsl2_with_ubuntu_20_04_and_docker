@@ -1,28 +1,6 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
-function WaitForEscOrEnter {
-    Write-Host ""
-    Write-Host "Pressione ESC ou ENTER para fechar esta janela!" -ForegroundColor Yellow
-    Write-Host ""
-    do {
-        $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    } until ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13)
-    exit
-}
-
-function IsAdmin {
-    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $principal = New-Object Security.Principal.WindowsPrincipal($identity)
-    $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-function Write-Info {
-    param ([string]$Message)
-    Write-Host ""
-    Write-Host $Message -ForegroundColor Cyan
-}
-
 function InstallWsl2 {
     Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
     Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
@@ -56,6 +34,28 @@ function InstallDocker {
     Write-Host " Docker CE (Community Edition) instalado com sucesso!" -ForegroundColor Green
     Write-Host "============================================================" -ForegroundColor Green
     RedirectIfDockerIsInstalled
+}
+
+function WaitForEscOrEnter {
+    Write-Host ""
+    Write-Host "Pressione ESC ou ENTER para fechar esta janela!" -ForegroundColor Yellow
+    Write-Host ""
+    do {
+        $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    } until ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13)
+    exit
+}
+
+function IsAdmin {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+    $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+function Write-Info {
+    param ([string]$Message)
+    Write-Host ""
+    Write-Host $Message -ForegroundColor Cyan
 }
 
 function RedirectIfDockerIsInstalled {
