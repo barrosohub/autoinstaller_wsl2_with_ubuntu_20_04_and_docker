@@ -90,7 +90,6 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Host "Notamos que o Ubuntu 20.04 está instalado corretamente no WSL. " -NoNewLine
         Write-Host "[OK]" -ForegroundColor Green
 
-        # Verificando se o Docker está instalado no WSL
         $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
         if (![string]::IsNullOrWhiteSpace($dockerCheck)) {
             Write-Host "Notamos que o Docker CE (Community Edition) está instalado corretamente no WSL. " -NoNewLine
