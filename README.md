@@ -2,7 +2,7 @@
 
 ![WSL2 e Docker no Ubuntu 20.04](https://i.ibb.co/234Ccf7/WSL-DOCKER-1.png)
 
-Bem-vindo a este guia fácil, rápido e divertido para instalar e configurar o WSL2 e o Docker no Ubuntu 20.04 no Windows! Este script de PowerShell faz todo o trabalho pesado por você, verificando se o WSL2 e o Ubuntu 20.04 estão instalados e, se necessário, instalando e configurando o Docker.
+Bem-vindo a este guia fácil, rápido para instalar e configurar o WSL2 e o Docker no Ubuntu 20.04 no Windows! Este script de PowerShell faz todo o trabalho pesado por você, verificando se o WSL2 e o Ubuntu 20.04 estão instalados e, se necessário, instalando e configurando o Docker.
 
 ## 📋 Requisitos
 
