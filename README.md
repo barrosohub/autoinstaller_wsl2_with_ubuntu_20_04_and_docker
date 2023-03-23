@@ -1,4 +1,4 @@
-# 🚀 Instalação do WSL2 e Docker no Ubuntu 20.04: Um guia divertido! 🎉
+# 🚀 Instalação do WSL2 e Docker no Ubuntu 20.04 🎉
 
 ![WSL2 e Docker no Ubuntu 20.04](https://i.ibb.co/234Ccf7/WSL-DOCKER-1.png)
 
