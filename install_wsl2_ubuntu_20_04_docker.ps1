@@ -75,7 +75,7 @@ if (-not (IsAdmin)) {
 $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
 
 Write-Info "===================================================================="
-Write-Info "Verificando o status do WSL... Aguarde, pode demorar alguns minutos!"
+Write-Info "Verificando o status do WSL, Ubuntu, Docker e ambiente... Aguarde, pode demorar alguns minutos!"
 Write-Info "===================================================================="
 Write-Host ""
 
