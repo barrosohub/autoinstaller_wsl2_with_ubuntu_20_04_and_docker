@@ -129,7 +129,7 @@ if ($wslFeature.State -eq "Enabled") {
     Write-Host "============================================"
     Write-Host ""
     Write-Host ""
-    Write-Host " (ATENÇÃO) Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker!" -ForegroundColor Yellow
+    Write-Host " (ATENÇÃO) Reinicie o computador para concluir a configuração do WSL2 com o Ubuntu! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker!" -ForegroundColor Yellow
     Write-Host ""
     Write-Host ""
 }
