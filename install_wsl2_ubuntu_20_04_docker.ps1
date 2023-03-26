@@ -121,14 +121,16 @@ if ($wslFeature.State -eq "Enabled") {
     Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
 
     InstallWsl2
-    InstallUbuntu20_04    
+    InstallUbuntu20_04
 
     Write-Host ""
     Write-Host "============================================"
     Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
     Write-Host "============================================"
     Write-Host ""
-    Write-Host " Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host " (ATENÇÃO) Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker!" -ForegroundColor Yellow
+    Write-Host ""
     Write-Host ""
 }
 
