@@ -125,7 +125,7 @@ if ($wslFeature.State -eq "Enabled") {
 
     Write-Host ""
     Write-Host "============================================"
-    Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso!" -ForegroundColor Green
+    Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso! Agora confira a instrução abaixo!" -ForegroundColor Green
     Write-Host "============================================"
     Write-Host ""
     Write-Host ""
