@@ -68,6 +68,14 @@ function RedirectIfDockerIsInstalled {
     wsl.exe -d Ubuntu-20.04
 }
 
+function AlertReboot {
+    Write-Host ""
+    Write-Host ""
+    Write-Host " (ATENÇÃO) Reinicie o computador para concluir a configuração do WSL2 com o Ubuntu! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker!" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ""
+}
+
 if (-not (IsAdmin)) {
     Write-Host "Este script precisa ser executado como administrador." -ForegroundColor Red
     Write-Host "Por favor, clique com o botão direito do mouse deste arquivo, procure e selecione a opção 'Executar como administrador' ou 'Run as Administrator'." -ForegroundColor Yellow
@@ -113,9 +121,7 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Host "============================================"
         Write-Host " Ubuntu 20.04 instalado com sucesso!" -ForegroundColor Green
         Write-Host "============================================"
-        Write-Host ""
-        Write-Host " Reinicie o computador para concluir a configuração do WSL2! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker" -ForegroundColor Yellow
-        Write-Host ""
+        AlertReboot
     }
 } else {
     Write-Info "Iniciando a configuracão/verificação do WSL2 e Ubuntu 20.04..."
@@ -127,11 +133,7 @@ if ($wslFeature.State -eq "Enabled") {
     Write-Host "============================================"
     Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso! Agora confira a instrução abaixo!" -ForegroundColor Green
     Write-Host "============================================"
-    Write-Host ""
-    Write-Host ""
-    Write-Host " (ATENÇÃO) Reinicie o computador para concluir a configuração do WSL2 com o Ubuntu! Após isso, execute esse script novamente para prosseguirmos para a configuração do Ubuntu e instalação do Docker!" -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host ""
+    AlertReboot
 }
 
 WaitForEscOrEnter
