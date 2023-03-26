@@ -28,8 +28,12 @@ function InstallUbuntu20_04 {
  }
 
 function InstallDocker {    
-    wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh"
-    wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
+    wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/docker_ce_ubuntu_20_04/main/install.sh \
+&& chmod +x ~/docker_install.sh \
+&& ~/docker_install.sh \
+&& rm ~/docker_install.sh \
+&& sudo service docker start"
+
     Write-Host "============================================================" -ForegroundColor Green
     Write-Host " Docker CE (Community Edition) instalado com sucesso!" -ForegroundColor Green
     Write-Host "============================================================" -ForegroundColor Green
