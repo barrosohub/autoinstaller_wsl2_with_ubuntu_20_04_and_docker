@@ -10,7 +10,9 @@ function InstallWsl2 {
     Invoke-WebRequest -Uri $KernelUrl -OutFile $DownloadPath
     Start-Process -FilePath msiexec -ArgumentList "/i", $DownloadPath, "/quiet", "/qn", "/norestart" -Wait
 
-    wsl --set-default-version 2 > Out-Null
+    wsl --set-default-version 2
+
+    Remove-Item -Path $DownloadPath
 }
 
 function InstallUbuntu20_04 {
