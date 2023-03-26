@@ -118,7 +118,7 @@ if ($wslFeature.State -eq "Enabled") {
         Write-Host ""
     }
 } else {
-    Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
+    Write-Info "Iniciando a configuracão/verificação do WSL2 e Ubuntu 20.04..."
 
     InstallWsl2
     InstallUbuntu20_04
