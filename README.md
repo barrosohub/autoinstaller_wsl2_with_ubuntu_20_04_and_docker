@@ -11,11 +11,16 @@ Bem-vindo a este guia fácil, rápido para instalar e configurar o WSL2 e o Dock
 
 ## 🛠️ Como usar
 
-1. Baixe o arquivo [install_wsl2_ubuntu_20_04_docker.ps1](install_wsl2_ubuntu_20_04_docker.ps1) e execute como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator". 📥
-2. O script verificará se o WSL2 e o Ubuntu 20.04 estão instalados. Se não estiverem, ele iniciará o processo de instalação. 🧪
-3. Caso o WSL2 e o Ubuntu 20.04 estejam instalados corretamente, o script verificará se o Docker está instalado no WSL. Se não estiver, ele instalará o Docker. 🐳
-4. Ao final do processo, o terminal será redirecionado para o WSL com o Ubuntu 20.04 e o Docker instalados. 🎯
-5. Pressione `ESC` ou `ENTER` para fechar a janela do PowerShell quando solicitado. 🚪
+1. Pressione **Win + R** para abrir a janela Executar.
+2. Digite `powershell.exe -Command "Start-Process powershell.exe -Verb runAs"` e pressione **Enter**. Isso abrirá o PowerShell como administrador.
+3. Cole o seguinte comando no PowerShell e pressione **Enter**:
+   ```powershell
+   Invoke-WebRequest -Uri https://raw.githubusercontent.com/barrosohub/autoinstaller_wsl2_with_ubuntu_20_04_and_docker/master/install_wsl2_ubuntu_20_04_docker.ps1 -OutFile install_wsl2_ubuntu_20_04_docker.ps1; Copy-Item .\install_wsl2_ubuntu_20_04_docker.ps1 .\autoinstall_wsl.ps1; Remove-Item .\install_wsl2_ubuntu_20_04_docker.ps1; .\autoinstall_wsl.ps1
+4. Execute o arquivo autoinstall_wsl.ps1 como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator". 📥
+5. O script verificará se o WSL2 e o Ubuntu 20.04 estão instalados. Se não estiverem, ele iniciará o processo de instalação. 🧪
+6. Caso o WSL2 e o Ubuntu 20.04 estejam instalados corretamente, o script verificará se o Docker está instalado no WSL. Se não estiver, ele instalará o Docker. 🐳
+7. Ao final do processo, o terminal será redirecionado para o WSL com o Ubuntu 20.04 e o Docker instalados. 🎯
+8. Pressione `ESC` ou `ENTER` para fechar a janela do PowerShell quando solicitado. 🚪
 
 ## 🌟 Funcionalidades
 
