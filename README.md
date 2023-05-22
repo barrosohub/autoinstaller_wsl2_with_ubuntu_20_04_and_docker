@@ -23,7 +23,7 @@ Remove-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1";
 Start-Process explorer.exe -ArgumentList "/select, `"$DownloadPath\autoinstall_wsl.ps1`""
 ```
 
-4. Execute o arquivo autoinstall_wsl.ps1 como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator". 📥
+4. Execute o arquivo **autoinstall_wsl.ps1** como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator". 📥
 5. O script verificará se o WSL2 e o Ubuntu 20.04 estão instalados. Se não estiverem, ele iniciará o processo de instalação. 🧪
 6. Caso o WSL2 e o Ubuntu 20.04 estejam instalados corretamente, o script verificará se o Docker está instalado no WSL. Se não estiver, ele instalará o Docker. 🐳
 7. Ao final do processo, o terminal será redirecionado para o WSL com o Ubuntu 20.04 e o Docker instalados. 🎯
