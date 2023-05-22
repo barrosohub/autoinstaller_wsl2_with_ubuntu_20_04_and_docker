@@ -13,11 +13,16 @@ Bem-vindo a este guia fácil, rápido para instalar e configurar o WSL2 e o Dock
 
 1. Pressione **Win + R** para abrir a janela Executar.
 2. Digite `powershell.exe -Command "Start-Process powershell.exe -Verb runAs"` e pressione **Enter**. Isso abrirá o PowerShell como administrador. (se aparecer alguma caixa de confirmação, confirme a execução)
+
+3. Copie e Cole o seguinte comando no PowerShell e pressione **Enter**. Se aparecer alguma mensagem, selecione a opção "S" (Sim) ou "Y" (Yes):
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+```
+
 3. Copie e Cole o seguinte comando no PowerShell e pressione **Enter**:
 
 ```powershell
-$DownloadPath = "$([Environment]::GetFolderPath([Environment+SpecialFolder]::UserProfile))\Downloads"; Invoke-WebRequest -Uri https://raw.githubusercontent.com/barrosohub/autoinstaller_wsl2_with_ubuntu_20_04_and_docker/master/install_wsl2_ubuntu_20_04_docker.ps1 -OutFile "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1"; Copy-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1" "$DownloadPath\autoinstall_wsl.ps1"; 
-Remove-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1"; Start-Process explorer.exe -ArgumentList "/select, `"$DownloadPath\autoinstall_wsl.ps1`""
+$DownloadPath = "$([Environment]::GetFolderPath([Environment+SpecialFolder]::UserProfile))\Downloads"; Invoke-WebRequest -Uri https://raw.githubusercontent.com/barrosohub/autoinstaller_wsl2_with_ubuntu_20_04_and_docker/master/install_wsl2_ubuntu_20_04_docker.ps1 -OutFile "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1"; Copy-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1" "$DownloadPath\autoinstall_wsl.ps1"; Remove-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1"; Start-Process explorer.exe -ArgumentList "/select, `"$DownloadPath\autoinstall_wsl.ps1`""
 ```
 
 4. Execute o arquivo **autoinstall_wsl.ps1** como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator". 📥
