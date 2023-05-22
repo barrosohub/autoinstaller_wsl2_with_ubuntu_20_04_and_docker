@@ -16,7 +16,7 @@ Bem-vindo a este guia fácil, rápido para instalar e configurar o WSL2 e o Dock
 
 3. Copie e Cole o seguinte comando no PowerShell e pressione **Enter**. Se aparecer alguma mensagem, selecione a opção "S" (Sim) ou "Y" (Yes):
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force;
+Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy Bypass
 ```
 
 3. Copie e Cole o seguinte comando no PowerShell e pressione **Enter**:
