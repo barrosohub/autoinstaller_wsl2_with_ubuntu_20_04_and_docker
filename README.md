@@ -16,6 +16,7 @@ Bem-vindo a este guia fácil, rápido para instalar e configurar o WSL2 e o Dock
 3. Cole o seguinte comando no PowerShell e pressione **Enter**:
    ```powershell
  $DownloadPath = "$([Environment]::GetFolderPath([Environment+SpecialFolder]::UserProfile))\Downloads"; Invoke-WebRequest -Uri https://raw.githubusercontent.com/barrosohub/autoinstaller_wsl2_with_ubuntu_20_04_and_docker/master/install_wsl2_ubuntu_20_04_docker.ps1 -OutFile "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1"; Copy-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1" "$DownloadPath\autoinstall_wsl.ps1"; Remove-Item "$DownloadPath\install_wsl2_ubuntu_20_04_docker.ps1"; Start-Process explorer.exe -ArgumentList "/select, `"$DownloadPath\autoinstall_wsl.ps1`""
+```
 4. Execute o arquivo autoinstall_wsl.ps1 como administrador. Para fazer isso, clique com o botão direito do mouse no ícone do PowerShell e selecione "Executar como administrador" ou "Run as Administrator". 📥
 5. O script verificará se o WSL2 e o Ubuntu 20.04 estão instalados. Se não estiverem, ele iniciará o processo de instalação. 🧪
 6. Caso o WSL2 e o Ubuntu 20.04 estejam instalados corretamente, o script verificará se o Docker está instalado no WSL. Se não estiver, ele instalará o Docker. 🐳
