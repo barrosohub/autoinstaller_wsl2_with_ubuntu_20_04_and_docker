@@ -15,23 +15,25 @@ function InstallWsl2 {
     Remove-Item -Path $DownloadPath
 }
 
-function InstallUbuntu20_04 {
+function InstallUbuntu {
     try {
-         Write-Host "Baixando e instalando o Ubuntu 20.04 via wsl..." -ForegroundColor Yellow
-         wsl --install -d Ubuntu-20.04
+         Write-Host "Baixando e instalando o Ubuntu via wsl..." -ForegroundColor Yellow
+         wsl --install -d Ubuntu
      } catch {
-         Write-Host "Nao foi possivel instalar o Ubuntu 20.04 via wsl ainda. Vamos tentar instalar via Appx..." -ForegroundColor Yellow
-         Write-Host "Baixando e instalando o Ubuntu 20.04..." -ForegroundColor Yellow
-         $UbuntuUrl = "https://aka.ms/wslubuntu2004"
-         $DownloadPath = "$env:TEMP\Ubuntu_2004.appx"
+         Write-Host "Nao foi possivel instalar o Ubuntu via wsl ainda. Vamos tentar instalar via Appx..." -ForegroundColor Yellow
+         Write-Host "==============================================================="
+         Write-Host "Baixando e instalando o Ubuntu... Aguarde..." -ForegroundColor Yellow
+         Write-Host "==============================================================="
+         $UbuntuUrl = "https://aka.ms/wslubuntu"
+         $DownloadPath = "$env:TEMP\Ubuntu_2210.appx"
          Invoke-WebRequest -Uri $UbuntuUrl -OutFile $DownloadPath
          Add-AppxPackage -Path $DownloadPath
      }
  }
 
 function InstallDocker {    
-    wsl.exe -d Ubuntu-20.04 --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/install_docker_ce_on_ubuntu/main/install.sh"
-    wsl.exe -d Ubuntu-20.04 --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
+    wsl.exe -d Ubuntu --exec sh -c "wget -O ~/docker_install.sh https://raw.githubusercontent.com/barrosohub/install_docker_ce_on_ubuntu/main/install.sh"
+    wsl.exe -d Ubuntu --exec sh -c "chmod +x ~/docker_install.sh && ~/docker_install.sh && rm ~/docker_install.sh && sudo service docker start"
     Write-Host "============================================================" -ForegroundColor Green
     Write-Host " Docker CE (Community Edition) instalado com sucesso!" -ForegroundColor Green
     Write-Host "============================================================" -ForegroundColor Green
@@ -65,7 +67,7 @@ function RedirectIfDockerIsInstalled {
     Write-Host "Aguarde 5 segundos... Estamos redirecionando para o terminal do WSL..." -ForegroundColor Yellow
     Write-Host ""
     Start-Sleep -Seconds 5
-    wsl.exe -d Ubuntu-20.04
+    wsl.exe -d Ubuntu
 }
 
 function AlertReboot {
@@ -93,45 +95,45 @@ if ($wslFeature.State -eq "Enabled") {
     Write-Host "WSL2 esta instalado. " -NoNewLine
     Write-Host "[OK]" -ForegroundColor Green
 
-    $ubuntuInstalled = (wsl.exe -l --quiet 2>&1 | Out-String).Replace("`r`n", "`n").Split("`n") -contains "Ubuntu-20.04"
-    $ubuntuInitialized = (wsl.exe -d Ubuntu-20.04 --exec sh -c "echo 'test'" 2>&1 | Out-String).Replace("`r`n", "`n").Split("`n") -contains "test"
+    $ubuntuInstalled = (wsl.exe -l --quiet 2>&1 | Out-String).Replace("`r`n", "`n").Split("`n") -contains "Ubuntu"
+    $ubuntuInitialized = (wsl.exe -d Ubuntu --exec sh -c "echo 'test'" 2>&1 | Out-String).Replace("`r`n", "`n").Split("`n") -contains "test"
 
     if ($ubuntuInstalled -and $ubuntuInitialized -eq "true") {
-        Write-Host "Notamos que o Ubuntu 20.04 esta instalado corretamente no WSL. " -NoNewLine
+        Write-Host "Notamos que o Ubuntu esta instalado corretamente no WSL. " -NoNewLine
         Write-Host "[OK]" -ForegroundColor Green
 
-        $dockerCheck = wsl.exe -d Ubuntu-20.04 --exec sh -c "which docker"
+        $dockerCheck = wsl.exe -d Ubuntu --exec sh -c "which docker"
         if (![string]::IsNullOrWhiteSpace($dockerCheck)) {
             Write-Host "Notamos que o Docker CE (Community Edition) esta instalado corretamente no WSL. " -NoNewLine
             Write-Host "[OK]" -ForegroundColor Green
             RedirectIfDockerIsInstalled
         } else {
-            Write-Host "Ok! Ja que o WSL e o Ubuntu 20.04 estao instalados corretamente, vamos agora instalar o Docker CE!" -ForegroundColor Yellow
+            Write-Host "Ok! Ja que o WSL e o Ubuntu estao instalados corretamente, vamos agora instalar o Docker CE!" -ForegroundColor Yellow
             InstallDocker
         }
     } elseif ($ubuntuInstalled) {
-        Write-Host "Ubuntu 20.04 esta instalado, mas nao foi inicializado. Por favor, inicialize o Ubuntu 20.04 e configure o usuario e senha. Apos isso, execute este script novamente." -ForegroundColor Yellow
-        Write-Host "Tentando inicializar o Ubuntu 20.04... (se der algum erro, tente reiniciar sua maquina e tente rodar de novo)" -ForegroundColor Yellow
-        wsl.exe -d Ubuntu-20.04
+        Write-Host "Ubuntu esta instalado, mas nao foi inicializado. Por favor, inicialize o Ubuntu e configure o usuario e senha. Apos isso, execute este script novamente." -ForegroundColor Yellow
+        Write-Host "Tentando inicializar o Ubuntu... (se der algum erro, tente reiniciar sua maquina e tente rodar de novo)" -ForegroundColor Yellow
+        wsl.exe -d Ubuntu
         WaitForEscOrEnter
     } else {
-        Write-Host "Ubuntu 20.04 nao esta instalado. Vamos instalar agora!" -ForegroundColor Yellow
-        InstallUbuntu20_04
+        Write-Host "Ubuntu nao esta instalado. Vamos instalar agora!" -ForegroundColor Yellow
+        InstallUbuntu
         Write-Host ""
         Write-Host "============================================"
-        Write-Host " Ubuntu 20.04 instalado com sucesso!" -ForegroundColor Green
+        Write-Host " Ubuntu instalado com sucesso!" -ForegroundColor Green
         Write-Host "============================================"
         AlertReboot
     }
 } else {
-    Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu 20.04..."
+    Write-Info "Iniciando a configuracao/verificacao do WSL2 e Ubuntu..."
 
     InstallWsl2
-    InstallUbuntu20_04
+    InstallUbuntu
 
     Write-Host ""
     Write-Host "============================================"
-    Write-Host " WSL2 e Ubuntu 20.04 instalados com sucesso! Agora confira a instrucao abaixo!" -ForegroundColor Green
+    Write-Host " WSL2 e Ubuntu instalados com sucesso! Agora confira a instrucao abaixo!" -ForegroundColor Green
     Write-Host "============================================"
     AlertReboot
 }
