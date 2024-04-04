@@ -31,6 +31,12 @@ $DownloadPath = "$([Environment]::GetFolderPath([Environment+SpecialFolder]::Use
 8. Ao final do processo, o terminal será redirecionado para o WSL com o Ubuntu 20.04 e o Docker instalados. 🎯
 9. Pressione `ESC` ou `ENTER` para fechar a janela do PowerShell quando solicitado. 🚪
 
+**OBSERVAÇÃO IMPORTANTE:**
+Se em algum momento o script redirecionar você para o terminal WSL antes de terminar todas as etapas, execute de novo COMO ADMINISTRADOR o arquivo **autoinstall_wsl.ps1** que está na sua pasta/diretório **Downloads**. Um indicativo que todas as etapas foram finalizadas, são os 3 OK's verdes que aparecem conforme imagem abaixo: 
+
+![image (5)](https://github.com/barrosohub/autoinstaller_wsl2_with_ubuntu_20_04_and_docker/assets/12834525/88acb0d4-bb3c-4fb2-bbb6-c9d953ade583)
+
+
 ## 🌟 Funcionalidades
 
 - Verifica se o PowerShell está sendo executado como administrador.
